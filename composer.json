@@ -1,6 +1,7 @@
 {
     "name": "iset-framework/service-manager",
     "type": "library",
+    "license": "BSD-3-Clause",
     "description": "iset-di: factory-driven dependency injection container",
     "authors": [
         {
