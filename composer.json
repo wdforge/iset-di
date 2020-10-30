@@ -10,10 +10,12 @@
         }
     ],
     "require": {
-        "iset-framework/utils":"^0.1-beta.1"
+        "iset-framework/utils":"^0.1-beta.1",
+        "container-interop/container-interop": "dev-master"
     },
     "require-dev": {
-        "iset-framework/utils":"^0.1-beta.1"
+        "iset-framework/utils":"^0.1-beta.1",
+        "container-interop/container-interop": "dev-master"
     },
     "autoload": {
       "psr-4": {
