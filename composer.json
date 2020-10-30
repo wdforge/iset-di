@@ -1,0 +1,16 @@
+{
+    "name": "wdforge/iset-di",
+    "type": "iset-di: factory-driven dependency injection container",
+    "authors": [
+        {
+            "name": "Dolgiy Yuriy",
+            "email": "wdforge@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "Iset\\Di\\": "src"
+       }
+     }
+}
