@@ -8,14 +8,12 @@ use Iset\Utils\IInitial;
 use Iset\Utils\IParams;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Container\ContainerExceptionInterface;
-use Interop\Container\ContainerInterface as InteropContainerInterface;
 
 /**
  * Class Manager
  * @package Iset\Di
  */
-class Manager implements IInitial, PsrContainerInterface,
-  InteropContainerInterface
+class Manager implements IInitial, PsrContainerInterface 
 {
   use TreeContainer;
 
