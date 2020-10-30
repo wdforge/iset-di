@@ -13,7 +13,7 @@ use Psr\Container\ContainerExceptionInterface;
  * Class Manager
  * @package Iset\Di
  */
-class Manager implements IInitial, PsrContainerInterface 
+class Manager implements IInitial, PsrContainerInterface
 {
   use TreeContainer;
 
@@ -305,7 +305,7 @@ class Manager implements IInitial, PsrContainerInterface
       if ($this->_factories[$class] && in_array(IDepended::class, class_implements($factoryClass))) {
         $this->_factories[$class]->_diManager = $this;
         // далее временно неработающий код
-        $getServiceManager = function() {
+        $getServiceManager = function () {
           return $this->_diManager;
         };
         $getServiceManager->bindTo($this->_factories[$class]);

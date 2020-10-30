@@ -12,6 +12,7 @@ class Chain extends AbstractChain
 {
 
   public static $_useInstances = [];
+
   /**
    * @param $object
    * @param array $params

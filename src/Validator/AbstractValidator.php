@@ -30,7 +30,8 @@ class AbstractValidator extends CachedInstance implements IDepended
    *
    * @param array $params
    */
-  public function setSchema(array $params) {
+  public function setSchema(array $params)
+  {
     $this->_params = $params;
   }
 
@@ -39,7 +40,8 @@ class AbstractValidator extends CachedInstance implements IDepended
    *
    * @param IParams $params
    */
-  public function validate(IParams $params) : boolean {
+  public function validate(IParams $params): boolean
+  {
     $this->_diManager->get('application/event/manager')->trigger(self::E_VALIDATOR_VALIDATE);
     return true;
   }

@@ -36,7 +36,7 @@ abstract class AbstractFactory extends CachedInstance implements \Iset\Di\IFacto
     $resultObject = $reflection->newInstanceArgs($params);
     if ($resultObject && in_array(IDepended::class, class_implements($class))) {
       $resultObject->_diManager = $this->_diManager;
-      $resultObject->setMethod('getServiceManager', function() {
+      $resultObject->setMethod('getServiceManager', function () {
         return $this->_diManager;
       });
     }
