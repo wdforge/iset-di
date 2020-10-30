@@ -1,4 +1,2 @@
 # iset-di
-Implementation a pattern ServiceLocator
-A component to create objects through factories. It is possible to build a conveyor from factories.
-It is also possible to place created objects in containers and delegate access through them.
+This is an implementation of the ServiceLocator pattern component creates objects through factories and you can build a pipeline from factories.
