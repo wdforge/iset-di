@@ -9,7 +9,9 @@
             "email": "wdforge@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "iset-framework/utils":"dev-master"
+    },
     "autoload": {
       "psr-4": {
         "Iset\\Di\\": "src"
