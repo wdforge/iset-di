@@ -1,6 +1,7 @@
 {
     "name": "iset-framework/service-manager",
-    "type": "iset-di: factory-driven dependency injection container",
+    "type": "library",
+    "description": "iset-di: factory-driven dependency injection container",
     "authors": [
         {
             "name": "Dolgiy Yuriy",
