@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "iset-framework/utils":"^0.1-beta.1",
+        "php": ">=7.2.0",
+        "iset-framework/utils":"0.1-beta.1",
         "psr/container": "1.0.0"
     },
     "require-dev": {
