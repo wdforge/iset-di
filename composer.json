@@ -10,7 +10,10 @@
         }
     ],
     "require": {
-        "iset-framework/utils":"0.1-beta.1"
+        "iset-framework/utils":"^0.1-beta.1"
+    },
+    "require-dev": {
+        "iset-framework/utils":"^0.1-beta.1"
     },
     "autoload": {
       "psr-4": {
