@@ -20,6 +20,7 @@ class Manager implements IInitial, PsrContainerInterface
   //
   private $_factories = [];
 
+  private $_params;
 
   // named instance storage
   private $_instances = [];
@@ -53,6 +54,7 @@ class Manager implements IInitial, PsrContainerInterface
 
   public function init(IParams $params)
   {
+    $this->_params = $params;
     $this->_factories = $params->get('application/di/factories', []);
     $this->_containers = $params->get('application/di/containers', []);
     $this->_middlewares = $params->get('application/di/middlewares', []);
@@ -64,7 +66,6 @@ class Manager implements IInitial, PsrContainerInterface
   /**
    *
    * @param $class
-   * @param IParams $params
    * @param null $name
    * @param bool $is_shared
    * @return null
@@ -319,10 +320,10 @@ class Manager implements IInitial, PsrContainerInterface
   /**
    *
    * @param type $class
-   * @param type $params
+   * @param IParams $params
    * @return boolean
    */
-  protected function createFromFactory($class, $params = [])
+  protected function createFromFactory($class, IParams $params)
   {
     if (isset($this->_factories[$class]) && is_string($this->_factories[$class])) {
 
@@ -330,7 +331,7 @@ class Manager implements IInitial, PsrContainerInterface
 
       if ($this->_factories[$class] instanceof IFactory) {
         $this->_factories[$class]->setServiceManager($this);
-        return $this->_factories[$class]->createInstance($params);
+        return $this->_factories[$class]->createInstance($params, $class);
       }
     }
 
@@ -425,6 +426,10 @@ class Manager implements IInitial, PsrContainerInterface
    */
   public function get($name, $default = null)
   {
+    if(class_exists($name)) {
+      return $this->createObject($name, $this->_params);
+    }
+
     $result = $this->getElementFromPatch($name, $this->_instances);
     return isset($result) ? $result : $default;
   }
