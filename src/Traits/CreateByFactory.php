@@ -2,6 +2,7 @@
 /**
  * Функционал для срздания объекта через фабрики
  */
+
 namespace Iset\Di\Traits;
 
 
@@ -63,17 +64,18 @@ trait CreateByFactory
    *
    * @param string $class
    * @param IParams $params
-   * @return boolean
+   * @return mixed
    */
-  protected function createFromFactory(string $class, IParams $params):? bool
+  protected function createFromFactory(string $class, IParams $params)
   {
     if (isset($this->_factories[$class]) && is_string($this->_factories[$class])) {
       $this->_factories[$class] = $this->createObject($this->_factories[$class]);
-
-      if ($this->_factories[$class] instanceof IFactory) {
-        $this->_factories[$class]->setServiceManager($this);
-        return $this->_factories[$class]->createInstance($params, $class);
-      }
+    }
+    if ($this->_factories[$class] instanceof IFactory) {
+      $this->_factories[$class]->setServiceManager($this);
+      return $this->_factories[$class]->createInstance($params, $class);
+    } else {
+      throw new \Exception(sprintf('Class factory: "%s" must be implement "%s" interface', get_class($this->_factories[$class]), IFactory::class));
     }
 
     return false;

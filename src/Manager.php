@@ -9,7 +9,6 @@ use Iset\Di\Traits\CreateContainedTrait;
 use Iset\Di\Traits\CreateSimpleTrait;
 use Iset\Di\Traits\MiddlewareTrait;
 use Iset\Utils\TreeContainer;
-
 use Iset\Utils\IInitial;
 use Iset\Utils\IParams;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
@@ -55,7 +54,7 @@ class Manager implements IInitial, PsrContainerInterface
    * @param null $name
    * @return mixed
    */
-  public function createInstance($class, IParams $params, $name = null): ?mixed
+  public function createInstance(string $class, IParams $params, $name = null): ?object
   {
     if (!$class) {
       return null;
@@ -77,11 +76,11 @@ class Manager implements IInitial, PsrContainerInterface
   /**
    * Универсальное создание объекта
    *
-   * @param type $class
-   * @param type $params
-   * @return type
+   * @param string $class
+   * @param array $params
+   * @return mixed
    */
-  protected function createObject($class, $params = [])
+  protected function createObject(string $class, $params = []): ?object
   {
     /**
      * Для Декоратора генерация объекта происходит через клонирование
@@ -95,7 +94,20 @@ class Manager implements IInitial, PsrContainerInterface
     }
 
     if (!isset($instance)) {
-      $instance = $this->createSimple($class, $params);
+      if ($params instanceof IParams) {
+        $params = $params->toArray();
+      }
+      $instance = $this->createSimple($class, []);
+    }
+
+    if (is_subclass_of($instance, Decorator::class)) {
+      $instance->_diManager = $this;
+
+      $getServiceManager = function () {
+        return $this;
+      };
+
+      $instance->setMethod('getServiceManager', $getServiceManager);
     }
 
     /**
@@ -105,8 +117,8 @@ class Manager implements IInitial, PsrContainerInterface
       $instance = $this->applyContainers($instance);
     }
 
-    if (!$this->hasCloned($class) && is_subclass_of($class, Decorator::class)) {
-      $this->setCloned($class, $instance);
+    if (!$this->hasCloned($class) && is_subclass_of($instance, Decorator::class)) {
+      $this->setCloned($instance);
     }
 
     return $instance;
@@ -115,14 +127,13 @@ class Manager implements IInitial, PsrContainerInterface
   /**
    * Получение значения по ключу
    *
-   * @param type $name
-   * @param type $default
+   * @param string $name
+   * @param mixed $default
    *
-   * @return type
    */
   public function get($name, $default = null)
   {
-    if(class_exists($name)) {
+    if (class_exists($name)) {
       return $this->createObject($name, $this->_params);
     }
 
@@ -133,11 +144,11 @@ class Manager implements IInitial, PsrContainerInterface
   /**
    * Установка значения по ключу
    *
-   * @param type $name
-   * @param type $value
+   * @param string $name
+   * @param mixed $value
    * @return \Iset\Di\Manager
    */
-  public function set($name, $value)
+  public function set(string $name, $value)
   {
     $this->setElementToPatch($name, $this->_instances, $value);
 
@@ -149,7 +160,7 @@ class Manager implements IInitial, PsrContainerInterface
    *
    * @inheritDoc
    */
-  public function has($id)
+  public function has($id): bool
   {
     return $this->get($id) ? true : false;
   }

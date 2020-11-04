@@ -3,6 +3,7 @@
 namespace Iset\Di\Factory;
 
 use Generic\Exception\LoggedException;
+use Iset\Di\IFactory;
 use Iset\Di\CachedInstance;
 use Iset\Di\IDepended;
 use Iset\Di\Middleware\Decorator;
@@ -13,7 +14,7 @@ use Iset\Di\Traits\CreateClonedTrait;
  * Class AbstractFactory
  * @package Iset\Create\Factory
  */
-abstract class AbstractFactory extends CachedInstance implements \Iset\Di\IFactory
+abstract class AbstractFactory extends CachedInstance implements IFactory
 {
   use CreateClonedTrait, AddServiceManagerTrait;
 

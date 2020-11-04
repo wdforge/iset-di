@@ -55,39 +55,38 @@ trait CreateClonedTrait
   /**
    * Присвоение свойств объекта
    *
-   * @param Decorator $instance
+   * @param object $instance
    * @param array $params
    */
-  protected function setProperties(Decorator $instance, array $params)
+  protected function setProperties($instance, array $params)
   {
     $properties = $this->getProperties($instance);
     foreach ($params as $key => $value) {
-
       if (isset($properties['public'][$key])) {
         $instance->$key = $value;
       }
+      if (is_subclass_of($instance, Decorator::class)) {
+        if (isset($properties['protected'][$key])) {
+          $instance->setProtectedProperty($key, $value);
+        }
 
-      if (isset($properties['protected'][$key])) {
-        $instance->setProtectedProperty($key, $value);
+        if (isset($properties['private'][$key])) {
+          $instance->setPrivateProperty($key, $value);
+        }
       }
-
-      if (isset($properties['private'][$key])) {
-        $instance->setPrivateProperty($key, $value);
+      if (isset($properties['static'][$key])) {
+        $instance->setStaticProperty($key, $value);
       }
-    }
-
-    if (isset($properties['static'][$key])) {
-      $instance->setStaticProperty($key, $value);
     }
   }
 
   /**
    * Получение свойств объекта
    *
-   * @param Decorator $instance
+   * @param object $instance
    * @return array
    */
-  protected function getProperties(Decorator $instance)
+  protected function getProperties(object $instance)
   {
     $reflect = new \ReflectionClass($instance);
     return [

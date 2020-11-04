@@ -15,7 +15,7 @@ trait CreateSimpleTrait
    * Простое создание объекта (без new)
    *
    * @param string $class
-   * @param array $params
+   * @param array|IParams $params
    * @return object
    */
   protected function createSimple(string $class, array $params = [])
