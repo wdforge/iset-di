@@ -1,13 +1,13 @@
 <?php
 
 namespace Iset\Di\Middleware;
+
 /**
  * Class Decorator
  * @package Iset\Di\Middleware
  */
 class Decorator
 {
-
   /**
    * @var array
    */
@@ -21,7 +21,6 @@ class Decorator
    */
   public function __call($name, array $arguments)
   {
-
     if (!empty(static::$_methods[$name]) && is_callable(static::$_methods[$name])) {
       return call_user_func_array(static::$_methods[$name], $arguments);
     }
@@ -30,6 +29,8 @@ class Decorator
   }
 
   /**
+   * Добавление нового метода в класс
+   *
    * @param $name
    * @param $callable
    */
@@ -38,4 +39,38 @@ class Decorator
     static::$_methods[$name] = $callable;
     static::$_methods[$name]->bindTo($this);
   }
+
+  /**
+   * Установка свойств
+   *
+   * @param string $name
+   * @param mixed $value
+   */
+  public function setProtectedProperty(string $name, mixed $value)
+  {
+    $this->$name = $value;
+  }
+
+  /**
+   * Установка свойств
+   *
+   * @param string $name
+   * @param mixed $value
+   */
+  public function setPrivateProperty(string $name, mixed $value)
+  {
+    $this->$name = $value;
+  }
+
+  /**
+   * Установка свойств
+   *
+   * @param string $name
+   * @param mixed $value
+   */
+  public function setStaticProperty(string $name, mixed $value)
+  {
+    static::$name = $value;
+  }
+
 }

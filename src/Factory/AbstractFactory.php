@@ -6,6 +6,8 @@ use Generic\Exception\LoggedException;
 use Iset\Di\CachedInstance;
 use Iset\Di\IDepended;
 use Iset\Di\Middleware\Decorator;
+use Iset\Di\Traits\AddServiceManagerTrait;
+use Iset\Di\Traits\CreateClonedTrait;
 
 /**
  * Class AbstractFactory
@@ -13,6 +15,8 @@ use Iset\Di\Middleware\Decorator;
  */
 abstract class AbstractFactory extends CachedInstance implements \Iset\Di\IFactory
 {
+  use CreateClonedTrait, AddServiceManagerTrait;
+
   /**
    * @var \Iset\Di\Manager
    */
@@ -37,16 +41,6 @@ abstract class AbstractFactory extends CachedInstance implements \Iset\Di\IFacto
 
     $resultObject = $reflection->newInstanceArgs($params);
 
-    if ($resultObject && in_array(IDepended::class, class_implements($class))) {
-      $resultObject->_diManager = $this->_diManager;
-      if (in_array(Decorator::class, class_parents($class))) {
-        $resultObject->setMethod('getServiceManager', function () {
-          return $this->_diManager;
-        });
-      } else {
-        throw new \Exception('Object must be parent by Decorator class');
-      }
-    }
     return $resultObject;
   }
 
