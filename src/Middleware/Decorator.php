@@ -6,6 +6,7 @@ use Iset\Utils\NullObject;
 /**
  * Class Decorator
  * @package Iset\Di\Middleware
+ * @method Iset\Di\Manager getServiceManager()
  */
 class Decorator
 {
