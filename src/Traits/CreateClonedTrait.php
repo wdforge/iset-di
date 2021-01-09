@@ -56,9 +56,9 @@ trait CreateClonedTrait
    * Присвоение свойств объекта
    *
    * @param object $instance
-   * @param array $params
+   * @param array|object $params
    */
-  protected function setProperties($instance, array $params)
+  protected function setProperties($instance, $params)
   {
     $properties = $this->getProperties($instance);
     foreach ($params as $key => $value) {
